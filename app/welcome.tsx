@@ -1,30 +1,22 @@
-import { useRouter } from 'expo-router';
 import { Pressable, StyleSheet, Text, View } from 'react-native';
 
-export default function HomeScreen() {
-  const router = useRouter();
-
-function handleGetStarted() {
-  router.push('/welcome');
-}
+export default function WelcomeScreen() {
+  function handleContinue() {
+    console.log('Continue button pressed');
+  }
 
   return (
     <View style={styles.container}>
-      <Text style={styles.brand}>☕ BrewMeet</Text>
+      <Text style={styles.emoji}>☕</Text>
 
-      <Text style={styles.title}>
-        Find your perfect coffee spot.
-      </Text>
+      <Text style={styles.title}>Welcome to BrewMeet!</Text>
 
       <Text style={styles.subtitle}>
-        Discover cafés for studying, working, relaxing, and meeting new people.
+        Let&apos;s personalize your coffee experience.
       </Text>
 
-      <Pressable
-        style={styles.button}
-        onPress={handleGetStarted}
-      >
-        <Text style={styles.buttonText}>Get Started</Text>
+      <Pressable style={styles.button} onPress={handleContinue}>
+        <Text style={styles.buttonText}>Continue</Text>
       </Pressable>
     </View>
   );
@@ -38,18 +30,15 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     paddingHorizontal: 28,
   },
-  brand: {
-    fontSize: 24,
-    fontWeight: '700',
-    color: '#7A4A2E',
-    marginBottom: 24,
+  emoji: {
+    fontSize: 56,
+    marginBottom: 20,
   },
   title: {
-    fontSize: 36,
+    fontSize: 34,
     fontWeight: '700',
     color: '#2F241F',
     textAlign: 'center',
-    lineHeight: 44,
   },
   subtitle: {
     fontSize: 17,
@@ -61,7 +50,7 @@ const styles = StyleSheet.create({
   button: {
     backgroundColor: '#7A4A2E',
     paddingVertical: 16,
-    paddingHorizontal: 40,
+    paddingHorizontal: 44,
     borderRadius: 14,
     marginTop: 36,
   },
