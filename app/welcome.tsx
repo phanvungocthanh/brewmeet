@@ -1,9 +1,12 @@
+import { useRouter } from 'expo-router';
 import { Pressable, StyleSheet, Text, View } from 'react-native';
 
 export default function WelcomeScreen() {
+  const router = useRouter();
+
   function handleContinue() {
-    console.log('Continue button pressed');
-  }
+  router.push('/login');
+}
 
   return (
     <View style={styles.container}>
