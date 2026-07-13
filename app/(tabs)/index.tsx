@@ -1,6 +1,10 @@
-import { StyleSheet, Text, View } from 'react-native';
+import { Pressable, StyleSheet, Text, View } from 'react-native';
 
 export default function HomeScreen() {
+  function handleGetStarted() {
+    console.log('Get Started button pressed');
+  }
+
   return (
     <View style={styles.container}>
       <Text style={styles.brand}>☕ BrewMeet</Text>
@@ -12,6 +16,13 @@ export default function HomeScreen() {
       <Text style={styles.subtitle}>
         Discover cafés for studying, working, relaxing, and meeting new people.
       </Text>
+
+      <Pressable
+        style={styles.button}
+        onPress={handleGetStarted}
+      >
+        <Text style={styles.buttonText}>Get Started</Text>
+      </Pressable>
     </View>
   );
 }
@@ -43,5 +54,17 @@ const styles = StyleSheet.create({
     textAlign: 'center',
     lineHeight: 26,
     marginTop: 16,
+  },
+  button: {
+    backgroundColor: '#7A4A2E',
+    paddingVertical: 16,
+    paddingHorizontal: 40,
+    borderRadius: 14,
+    marginTop: 36,
+  },
+  buttonText: {
+    color: '#FFFFFF',
+    fontSize: 17,
+    fontWeight: '700',
   },
 });
