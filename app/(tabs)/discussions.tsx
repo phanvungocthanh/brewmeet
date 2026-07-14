@@ -1,14 +1,10 @@
 import { Colors } from '@/constants/colors';
 import { StyleSheet, Text, View } from 'react-native';
 
-export default function HomeScreen() {
+export default function DiscussionsScreen() {
   return (
     <View style={styles.container}>
-      <Text style={styles.title}>BrewMeet Home</Text>
-
-      <Text style={styles.subtitle}>
-        Your coffee recommendations will appear here.
-      </Text>
+      <Text style={styles.title}>Discussions</Text>
     </View>
   );
 }
@@ -19,17 +15,10 @@ const styles = StyleSheet.create({
     backgroundColor: Colors.background,
     alignItems: 'center',
     justifyContent: 'center',
-    paddingHorizontal: 24,
   },
   title: {
     fontSize: 32,
     fontWeight: '700',
     color: Colors.textPrimary,
-  },
-  subtitle: {
-    fontSize: 16,
-    color: Colors.textSecondary,
-    textAlign: 'center',
-    marginTop: 12,
   },
 });

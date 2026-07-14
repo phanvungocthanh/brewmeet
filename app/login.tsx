@@ -8,8 +8,8 @@ export default function LoginScreen() {
   const router = useRouter();
 
   function handleLogin() {
-    console.log('Log In button pressed');
-  }
+  router.replace('/(tabs)');
+}
 
   return (
     <View style={styles.container}>
