@@ -1,4 +1,6 @@
-import { Pressable, StyleSheet, Text, TextInput, View } from 'react-native';
+import PrimaryButton from '@/components/PrimaryButton';
+import { Colors } from '@/constants/colors';
+import { StyleSheet, Text, TextInput, View } from 'react-native';
 
 export default function SignUpScreen() {
   function handleCreateAccount() {
@@ -18,12 +20,14 @@ export default function SignUpScreen() {
       <TextInput
         style={styles.input}
         placeholder="Name"
+        placeholderTextColor={Colors.textSecondary}
         autoCapitalize="words"
       />
 
       <TextInput
         style={styles.input}
         placeholder="Email"
+        placeholderTextColor={Colors.textSecondary}
         keyboardType="email-address"
         autoCapitalize="none"
       />
@@ -31,12 +35,14 @@ export default function SignUpScreen() {
       <TextInput
         style={styles.input}
         placeholder="Password"
+        placeholderTextColor={Colors.textSecondary}
         secureTextEntry
       />
 
-      <Pressable style={styles.button} onPress={handleCreateAccount}>
-        <Text style={styles.buttonText}>Create Account</Text>
-      </Pressable>
+      <PrimaryButton
+        title="Create Account"
+        onPress={handleCreateAccount}
+      />
     </View>
   );
 }
@@ -44,48 +50,39 @@ export default function SignUpScreen() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#F7F1E8',
+    backgroundColor: Colors.background,
     justifyContent: 'center',
     paddingHorizontal: 28,
   },
   logo: {
     fontSize: 24,
     fontWeight: '700',
-    color: '#7A4A2E',
+    color: Colors.primary,
     textAlign: 'center',
     marginBottom: 24,
   },
   title: {
     fontSize: 32,
     fontWeight: '700',
-    color: '#2F241F',
+    color: Colors.textPrimary,
     textAlign: 'center',
   },
   subtitle: {
     fontSize: 16,
-    color: '#6D625C',
+    color: Colors.textSecondary,
     textAlign: 'center',
     lineHeight: 24,
     marginTop: 12,
     marginBottom: 32,
   },
   input: {
-    backgroundColor: '#FFFFFF',
+    backgroundColor: Colors.white,
+    borderColor: Colors.border,
+    borderWidth: 1,
     borderRadius: 12,
     padding: 16,
     marginBottom: 16,
     fontSize: 16,
-  },
-  button: {
-    backgroundColor: '#7A4A2E',
-    padding: 16,
-    borderRadius: 12,
-    alignItems: 'center',
-    marginTop: 12,
-  },
-  buttonText: {
-    color: '#FFFFFF',
-    fontSize: 17,
-    fontWeight: '700',
+    color: Colors.textPrimary,
   },
 });

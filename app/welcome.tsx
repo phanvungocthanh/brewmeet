@@ -1,12 +1,14 @@
+import PrimaryButton from '@/components/PrimaryButton';
+import { Colors } from '@/constants/colors';
 import { useRouter } from 'expo-router';
-import { Pressable, StyleSheet, Text, View } from 'react-native';
+import { StyleSheet, Text, View } from 'react-native';
 
 export default function WelcomeScreen() {
   const router = useRouter();
 
   function handleContinue() {
-  router.push('/login');
-}
+    router.push('/login');
+  }
 
   return (
     <View style={styles.container}>
@@ -18,9 +20,10 @@ export default function WelcomeScreen() {
         Let&apos;s personalize your coffee experience.
       </Text>
 
-      <Pressable style={styles.button} onPress={handleContinue}>
-        <Text style={styles.buttonText}>Continue</Text>
-      </Pressable>
+      <PrimaryButton
+        title="Continue"
+        onPress={handleContinue}
+      />
     </View>
   );
 }
@@ -28,7 +31,7 @@ export default function WelcomeScreen() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#F7F1E8',
+    backgroundColor: Colors.background,
     justifyContent: 'center',
     alignItems: 'center',
     paddingHorizontal: 28,
@@ -40,26 +43,14 @@ const styles = StyleSheet.create({
   title: {
     fontSize: 34,
     fontWeight: '700',
-    color: '#2F241F',
+    color: Colors.textPrimary,
     textAlign: 'center',
   },
   subtitle: {
     fontSize: 17,
-    color: '#6D625C',
+    color: Colors.textSecondary,
     textAlign: 'center',
     lineHeight: 26,
     marginTop: 16,
-  },
-  button: {
-    backgroundColor: '#7A4A2E',
-    paddingVertical: 16,
-    paddingHorizontal: 44,
-    borderRadius: 14,
-    marginTop: 36,
-  },
-  buttonText: {
-    color: '#FFFFFF',
-    fontSize: 17,
-    fontWeight: '700',
   },
 });

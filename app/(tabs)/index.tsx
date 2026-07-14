@@ -1,12 +1,14 @@
+import PrimaryButton from '@/components/PrimaryButton';
+import { Colors } from '@/constants/colors';
 import { useRouter } from 'expo-router';
-import { Pressable, StyleSheet, Text, View } from 'react-native';
+import { StyleSheet, Text, View } from 'react-native';
 
 export default function HomeScreen() {
   const router = useRouter();
 
-function handleGetStarted() {
-  router.push('/welcome');
-}
+  function handleGetStarted() {
+    router.push('/welcome');
+  }
 
   return (
     <View style={styles.container}>
@@ -20,12 +22,10 @@ function handleGetStarted() {
         Discover cafés for studying, working, relaxing, and meeting new people.
       </Text>
 
-      <Pressable
-        style={styles.button}
+      <PrimaryButton
+        title="Get Started"
         onPress={handleGetStarted}
-      >
-        <Text style={styles.buttonText}>Get Started</Text>
-      </Pressable>
+      />
     </View>
   );
 }
@@ -33,7 +33,7 @@ function handleGetStarted() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#F7F1E8',
+    backgroundColor: Colors.background,
     justifyContent: 'center',
     alignItems: 'center',
     paddingHorizontal: 28,
@@ -41,33 +41,21 @@ const styles = StyleSheet.create({
   brand: {
     fontSize: 24,
     fontWeight: '700',
-    color: '#7A4A2E',
+    color: Colors.primary,
     marginBottom: 24,
   },
   title: {
     fontSize: 36,
     fontWeight: '700',
-    color: '#2F241F',
+    color: Colors.textPrimary,
     textAlign: 'center',
     lineHeight: 44,
   },
   subtitle: {
     fontSize: 17,
-    color: '#6D625C',
+    color: Colors.textSecondary,
     textAlign: 'center',
     lineHeight: 26,
     marginTop: 16,
-  },
-  button: {
-    backgroundColor: '#7A4A2E',
-    paddingVertical: 16,
-    paddingHorizontal: 40,
-    borderRadius: 14,
-    marginTop: 36,
-  },
-  buttonText: {
-    color: '#FFFFFF',
-    fontSize: 17,
-    fontWeight: '700',
   },
 });
