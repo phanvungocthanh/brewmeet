@@ -1,7 +1,8 @@
+import AppInput from '@/components/AppInput';
 import PrimaryButton from '@/components/PrimaryButton';
 import { Colors } from '@/constants/colors';
 import { useRouter } from 'expo-router';
-import { Pressable, StyleSheet, Text, TextInput, View } from 'react-native';
+import { Pressable, StyleSheet, Text, View } from 'react-native';
 
 export default function LoginScreen() {
   const router = useRouter();
@@ -20,18 +21,14 @@ export default function LoginScreen() {
         Continue your coffee journey.
       </Text>
 
-      <TextInput
-        style={styles.input}
+      <AppInput
         placeholder="Email"
-        placeholderTextColor={Colors.textSecondary}
         keyboardType="email-address"
         autoCapitalize="none"
       />
 
-      <TextInput
-        style={styles.input}
+      <AppInput
         placeholder="Password"
-        placeholderTextColor={Colors.textSecondary}
         secureTextEntry
       />
 
@@ -80,16 +77,6 @@ const styles = StyleSheet.create({
     lineHeight: 24,
     marginTop: 12,
     marginBottom: 36,
-  },
-  input: {
-    backgroundColor: Colors.white,
-    borderColor: Colors.border,
-    borderWidth: 1,
-    borderRadius: 12,
-    padding: 16,
-    marginBottom: 16,
-    fontSize: 16,
-    color: Colors.textPrimary,
   },
   footerContainer: {
     flexDirection: 'row',
