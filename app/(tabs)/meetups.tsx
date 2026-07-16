@@ -1,6 +1,8 @@
+import MeetupFeedCard from '@/components/MeetupFeedCard';
 import { Colors } from '@/constants/colors';
 import { Ionicons } from '@expo/vector-icons';
-import { useState } from 'react';
+import { useRouter } from 'expo-router';
+import { useMemo, useState } from 'react';
 import {
     Pressable,
     ScrollView,
@@ -12,14 +14,75 @@ import {
 
 const categories = ['All', 'Study', 'Hangout', 'Networking'];
 
+const meetups = [
+  {
+    id: '1',
+    initials: 'LC',
+    hostName: 'Lauren Chen',
+    postedDate: 'Posted Today',
+    description: 'Working on a coding project. Feel free to join!',
+    coffeeShop: 'Brew Lab Coffee',
+    time: 'Today at 3:00 PM',
+    category: 'Study',
+    attendeeCount: 3,
+    capacity: 6,
+  },
+  {
+    id: '2',
+    initials: 'MR',
+    hostName: 'Max Rodriguez',
+    postedDate: 'Posted Tomorrow',
+    description: 'Morning coffee and networking for tech professionals.',
+    coffeeShop: 'The Daily Grind',
+    time: 'Tomorrow at 10:00 AM',
+    category: 'Networking',
+    attendeeCount: 5,
+    capacity: 8,
+  },
+  {
+    id: '3',
+    initials: 'CW',
+    hostName: 'Caddy Williams',
+    postedDate: 'Posted Today',
+    description:
+      'Just moved to NYC! Looking to meet new people over coffee ☕',
+    coffeeShop: 'Urban Bean',
+    time: 'Today at 2:00 PM',
+    category: 'Hangout',
+    attendeeCount: 2,
+    capacity: 5,
+  },
+];
+
 export default function MeetupsScreen() {
   const [selectedCategory, setSelectedCategory] = useState('All');
+  const [searchQuery, setSearchQuery] = useState('');
+  const router = useRouter();
+  const filteredMeetups = useMemo(() => {
+  const normalizedSearch = searchQuery.trim().toLowerCase();
+
+    return meetups.filter((meetup) => {
+      const matchesCategory =
+        selectedCategory === 'All' ||
+        meetup.category === selectedCategory;
+
+      const matchesSearch =
+        normalizedSearch.length === 0 ||
+        meetup.coffeeShop.toLowerCase().includes(normalizedSearch) ||
+        meetup.hostName.toLowerCase().includes(normalizedSearch) ||
+        meetup.description.toLowerCase().includes(normalizedSearch) ||
+        meetup.time.toLowerCase().includes(normalizedSearch);
+
+      return matchesCategory && matchesSearch;
+    });
+  }, [searchQuery, selectedCategory]);
 
   return (
     <View style={styles.screen}>
       <ScrollView
         contentContainerStyle={styles.content}
         showsVerticalScrollIndicator={false}
+        keyboardShouldPersistTaps="handled"
       >
         <Text style={styles.title}>Coffee Meetups</Text>
 
@@ -33,8 +96,11 @@ export default function MeetupsScreen() {
 
             <TextInput
               style={styles.searchInput}
-              placeholder="Search by ZIP or date"
+              placeholder="Search by café, host, or date"
               placeholderTextColor={Colors.textSecondary}
+              value={searchQuery}
+              onChangeText={setSearchQuery}
+              returnKeyType="search"
             />
           </View>
 
@@ -79,16 +145,46 @@ export default function MeetupsScreen() {
 
         <View style={styles.divider} />
 
-        <View style={styles.placeholderCard}>
-          <Text style={styles.placeholderText}>
-            Meetup cards will appear here next.
-          </Text>
-        </View>
+        {filteredMeetups.length > 0 ? (
+          filteredMeetups.map((meetup) => (
+            <MeetupFeedCard
+              key={meetup.id}
+              initials={meetup.initials}
+              hostName={meetup.hostName}
+              postedDate={meetup.postedDate}
+              description={meetup.description}
+              coffeeShop={meetup.coffeeShop}
+              time={meetup.time}
+              category={meetup.category}
+              attendeeCount={meetup.attendeeCount}
+              capacity={meetup.capacity}
+            />
+          ))
+        ) : (
+          <View style={styles.emptyState}>
+            <Ionicons
+              name="cafe-outline"
+              size={42}
+              color={Colors.primary}
+            />
+
+            <Text style={styles.emptyTitle}>No meetups found</Text>
+
+            <Text style={styles.emptyText}>
+              Try a different category or search term.
+            </Text>
+          </View>
+        )}
       </ScrollView>
 
-      <Pressable style={styles.floatingButton}>
-        <Ionicons name="add" size={30} color={Colors.white} />
-      </Pressable>
+      <Pressable
+  style={styles.floatingButton}
+  onPress={() => router.push('/create-meetup')}
+  accessibilityRole="button"
+  accessibilityLabel="Create a meetup"
+>
+  <Ionicons name="add" size={30} color={Colors.white} />
+</Pressable>
     </View>
   );
 }
@@ -169,20 +265,28 @@ const styles = StyleSheet.create({
     marginTop: 24,
     marginBottom: 24,
   },
-  placeholderCard: {
-    minHeight: 180,
+  emptyState: {
+    minHeight: 220,
     backgroundColor: Colors.white,
-    borderRadius: 20,
     borderWidth: 1,
     borderColor: Colors.border,
+    borderRadius: 20,
     alignItems: 'center',
     justifyContent: 'center',
     paddingHorizontal: 28,
   },
-  placeholderText: {
+  emptyTitle: {
+    fontSize: 18,
+    fontWeight: '800',
+    color: Colors.textPrimary,
+    marginTop: 14,
+  },
+  emptyText: {
     fontSize: 15,
+    lineHeight: 22,
     color: Colors.textSecondary,
     textAlign: 'center',
+    marginTop: 6,
   },
   floatingButton: {
     position: 'absolute',
