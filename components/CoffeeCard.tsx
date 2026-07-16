@@ -1,6 +1,8 @@
 import { Colors } from '@/constants/colors';
 import { Ionicons } from '@expo/vector-icons';
-import { StyleSheet, Text, View } from 'react-native';
+import { useRouter } from 'expo-router';
+import { useState } from 'react';
+import { Pressable, StyleSheet, Text, View } from 'react-native';
 
 type CoffeeCardProps = {
   name: string;
@@ -15,8 +17,26 @@ export default function CoffeeCard({
   distance,
   tags,
 }: CoffeeCardProps) {
+  const router = useRouter();
+  const [isFavorite, setIsFavorite] = useState(false);
+
+  function handleCardPress() {
+  router.push({
+    pathname: '/coffee-details',
+    params: {
+      name: name,
+      rating: rating,
+      distance: distance,
+    },
+  });
+}
+
+  function handleFavoritePress() {
+    setIsFavorite((currentValue) => !currentValue);
+  }
+
   return (
-    <View style={styles.card}>
+    <Pressable style={styles.card} onPress={handleCardPress}>
       <View style={styles.topRow}>
         <View style={styles.shopInfo}>
           <Text style={styles.name}>{name}</Text>
@@ -26,11 +46,19 @@ export default function CoffeeCard({
           </Text>
         </View>
 
-        <Ionicons
-          name="heart-outline"
-          size={24}
-          color={Colors.primary}
-        />
+        <Pressable
+          onPress={(event) => {
+            event.stopPropagation();
+            handleFavoritePress();
+          }}
+          hitSlop={10}
+        >
+          <Ionicons
+            name={isFavorite ? 'heart' : 'heart-outline'}
+            size={25}
+            color={Colors.primary}
+          />
+        </Pressable>
       </View>
 
       <View style={styles.tagRow}>
@@ -40,7 +68,7 @@ export default function CoffeeCard({
           </View>
         ))}
       </View>
-    </View>
+    </Pressable>
   );
 }
 
