@@ -48,3 +48,6 @@ Join our community of developers creating universal apps.
 
 - [Expo on GitHub](https://github.com/expo/expo): View our open source platform and contribute.
 - [Discord community](https://chat.expo.dev): Chat with Expo users and ask questions.
+## Demo Video
+
+[![BrewMeet Demo](https://img.youtube.com/vi/jWr0Xd0sXik/0.jpg)](https://youtube.com/shorts/jWr0Xd0sXik)
