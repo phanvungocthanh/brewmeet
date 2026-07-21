@@ -27,6 +27,7 @@ export default function CoffeeCard({
       name: name,
       rating: rating,
       distance: distance,
+      tags: JSON.stringify(tags),
     },
   });
 }

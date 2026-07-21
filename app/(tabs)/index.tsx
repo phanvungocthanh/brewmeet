@@ -1,14 +1,15 @@
+
 import CoffeeCard from '@/components/CoffeeCard';
+import HomeHeader from '@/components/HomeHeader';
 import MapCard from '@/components/MapCard';
 import MeetupCard from '@/components/MeetupCard';
+import SearchSection from '@/components/SearchSection';
 import { Colors } from '@/constants/colors';
 import {
   ScrollView,
   StyleSheet,
-  Text
+  Text,
 } from 'react-native';
-import HomeHeader from '../../components/HomeHeader';
-import SearchSection from '../../components/SearchSection';
 
 export default function HomeScreen() {
   return (
