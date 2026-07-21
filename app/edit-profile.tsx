@@ -3,16 +3,17 @@ import { Ionicons } from '@expo/vector-icons';
 import { router } from 'expo-router';
 import { useState } from 'react';
 import {
-    Alert,
-    KeyboardAvoidingView,
-    Platform,
-    Pressable,
-    ScrollView,
-    StyleSheet,
-    Text,
-    TextInput,
-    View,
+  Alert,
+  KeyboardAvoidingView,
+  Platform,
+  Pressable,
+  ScrollView,
+  StyleSheet,
+  Text,
+  TextInput,
+  View,
 } from 'react-native';
+import { useProfile } from '../contexts/ProfileContext';
 
 const coffeePreferences = [
   'Quiet spaces',
@@ -26,24 +27,21 @@ const coffeePreferences = [
 ];
 
 export default function EditProfileScreen() {
-  const [name, setName] = useState('Thanh Phan');
-  const [profession, setProfession] = useState(
-    'Operations Analyst'
-  );
-  const [location, setLocation] = useState(
-    'Lewisville, Texas'
-  );
-  const [bio, setBio] = useState(
-    'Coffee lover, product builder, and café explorer.'
-  );
+  const { profile, updateProfile } = useProfile();
+  const [name, setName] = useState(profile.name);
 
-  const [selectedPreferences, setSelectedPreferences] =
-    useState([
-      'Quiet spaces',
-      'Good WiFi',
-      'Remote work',
-      'Great coffee',
-    ]);
+const [profession, setProfession] = useState(
+  profile.profession
+);
+
+const [location, setLocation] = useState(
+  profile.location
+);
+
+const [bio, setBio] = useState(profile.bio);
+
+const [selectedPreferences, setSelectedPreferences] =
+  useState(profile.preferences);
 
   function togglePreference(preference: string) {
     setSelectedPreferences((currentPreferences) => {
@@ -58,26 +56,34 @@ export default function EditProfileScreen() {
   }
 
   function handleSave() {
-    if (!name.trim()) {
-      Alert.alert(
-        'Name required',
-        'Please enter your name.'
-      );
-      return;
-    }
-
+  if (!name.trim()) {
     Alert.alert(
-      'Profile updated',
-      'Your changes have been saved.',
-      [
-        {
-          text: 'Done',
-          onPress: () =>
-            router.replace('/(tabs)/profile'),
-        },
-      ]
+      'Name required',
+      'Please enter your name.'
     );
+    return;
   }
+
+  updateProfile({
+    name: name.trim(),
+    profession: profession.trim(),
+    location: location.trim(),
+    bio: bio.trim(),
+    preferences: selectedPreferences,
+  });
+
+  Alert.alert(
+    'Profile updated',
+    'Your changes have been saved.',
+    [
+      {
+        text: 'Done',
+        onPress: () =>
+          router.replace('/(tabs)/profile'),
+      },
+    ]
+  );
+}
 
   return (
     <KeyboardAvoidingView

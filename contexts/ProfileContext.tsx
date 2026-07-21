@@ -1,7 +1,9 @@
+import AsyncStorage from '@react-native-async-storage/async-storage';
 import {
     createContext,
     ReactNode,
     useContext,
+    useEffect,
     useState,
 } from 'react';
 
@@ -17,6 +19,8 @@ type ProfileContextType = {
   profile: Profile;
   updateProfile: (updatedProfile: Profile) => void;
 };
+
+const PROFILE_STORAGE_KEY = 'brewmeet-profile';
 
 const defaultProfile: Profile = {
   name: 'Thanh Phan',
@@ -42,8 +46,35 @@ export function ProfileProvider({
   const [profile, setProfile] =
     useState<Profile>(defaultProfile);
 
-  function updateProfile(updatedProfile: Profile) {
-    setProfile(updatedProfile);
+  useEffect(() => {
+    loadSavedProfile();
+  }, []);
+
+  async function loadSavedProfile() {
+    try {
+      const savedProfile = await AsyncStorage.getItem(
+        PROFILE_STORAGE_KEY
+      );
+
+      if (savedProfile) {
+        setProfile(JSON.parse(savedProfile));
+      }
+    } catch (error) {
+      console.error('Unable to load profile:', error);
+    }
+  }
+
+  async function updateProfile(updatedProfile: Profile) {
+    try {
+      setProfile(updatedProfile);
+
+      await AsyncStorage.setItem(
+        PROFILE_STORAGE_KEY,
+        JSON.stringify(updatedProfile)
+      );
+    } catch (error) {
+      console.error('Unable to save profile:', error);
+    }
   }
 
   return (
